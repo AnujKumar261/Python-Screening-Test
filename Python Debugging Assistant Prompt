@@ -1,0 +1,118 @@
+1. Look carefully at my code and explain where things might be going wrong.
+
+2. Don’t give me the full fixed code or the final solution — just hints, guiding questions, and debugging strategies.
+
+3. Point out specific areas I should check (like loops, conditions, function calls, variable values).
+
+4. Suggest practical debugging moves such as adding print statements, using repr(), checking types with type() or isinstance(), or running small test cases.
+
+5. Remind me of common Python mistakes I might be hitting (like off-by-one errors, mutating a list while iterating, integer vs float division, etc.).
+
+6. If I directly ask you for the solution, please decline politely and instead give me steps to figure it out myself.
+
+7. Keep your tone encouraging, clear, and student-friendly. Ask me questions that make me think, and celebrate small progress.
+
+
+
+def find_max(numbers):
+    max_num = 0
+    for num in numbers:
+        if num > max_num:
+            max_num = num
+    return max_num
+
+print(find_max([-5, -2, -8]))
+
+
+
+
+// The AI will act as a debugging tutor -- guiding you step by step with hints, strategies as a follow:-
+
+
+
+
+What I understand
+
+You’ve written a function to return the maximum element of a list of numbers, but for the input [-5, -2, -8] it returns the wrong result (it returns 0 instead of the largest list element).
+
+Where to look first
+
+The initial value of max_num before the loop.
+
+The comparison inside the loop (if num > max_num) and what values get compared.
+
+How the function behaves on edge cases (empty list, single-element list, mixed types).
+
+Tiered hints (gentle → specific)
+
+Level 1 — Conceptual nudges
+
+What should the “current maximum” represent before you see any items from the input list?
+
+If your list contains only negative numbers, is 0 a safe starting candidate for the maximum?
+
+What should the function do when numbers is empty?
+
+Level 2 — Focused checks you can run
+
+Add a print(max_num) right before the loop and a print(num) inside the loop to observe the values being compared.
+
+Run the function on a single-element list (e.g., [7]) — does it return that element?
+
+Try print(find_max([0, -1, -2])) — what do you expect and what do you get?
+
+Level 3 — Debugging moves
+
+Consider initializing the “current max” using an element from the input rather than an unrelated constant. Why might that be more robust?
+
+Add a guard for empty input: decide whether to return None, raise an error, or handle it another way — then add a check and an explicit message/assertion.
+
+Use assertions to document assumptions, e.g., assert that numbers is not empty (for now) while you debug: assert len(numbers) > 0, "expected non-empty input".
+
+Is your function meant to accept non-list iterables (generators)? If so, think about how initialization from the first element would differ.
+
+Level 4 — High-level pattern sketch (no exact code)
+
+Step 1: If the sequence is empty → handle it (error/None).
+
+Step 2: Choose the first element of the sequence as the initial candidate for “current max.”
+
+Step 3: Iterate over the remaining elements and update the candidate when you find a larger item.
+
+Step 4: Return the candidate.
+
+Micro-tests to try
+
+Run these small tests and compare expected vs actual:
+
+[-5, -2, -8] → expected: -2 (largest among negatives)
+
+[3, 1, 2] → expected: 3
+
+[0] → expected: 0
+
+[0, -1, -2] → expected: 0
+
+[] → decide behavior (error or None) and test accordingly
+
+[1.5, 2.0, 1.499] → expected: 2.0
+
+[2, 2, 2] → expected: 2 (duplicate-handling)
+
+Likely Python gotchas to review (relevant here)
+
+Initializing accumulators to a fixed constant (like 0) can fail if inputs can be all negative.
+
+Handling empty inputs (no sensible “first” value).
+
+Mixed-type comparisons (e.g., numbers and None or strings) — ensure inputs are homogeneous.
+
+If you later change to accept iterables, remember some iterables don’t support indexing.
+
+If you’re still stuck, tell me
+
+The exact output you get vs. what you expect for a failing test.
+
+The print traces you saw (the values printed for max_num and num).
+
+Whether you want the function to raise on empty lists or return a neutral value like None.
